@@ -1,9 +1,0 @@
-<toolSet name="External Tools">
-  <tool name="build_cmake_libtorch" showInMainMenu="false" showInEditor="false" showInProject="false" showInSearchPopup="false" disabled="false" useConsole="true" showConsoleOnStdOut="false" showConsoleOnStdErr="false" synchronizeAfterRun="true">
-    <exec>
-      <option name="COMMAND" value="cmake" />
-      <option name="PARAMETERS" value="-DCMAKE_PREFIX_PATH=/lib/libtorch" />
-      <option name="WORKING_DIRECTORY" value="cmake-build-debug" />
-    </exec>
-  </tool>
-</toolSet>

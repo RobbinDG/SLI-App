@@ -23,7 +23,7 @@ add_executable(
         ${OPENMP3_ROOT}/include/openmp3.h
         ${OPENMP3_ROOT}/openmp3.cpp
         ${OPENMP3_ROOT}/openmp3.h
-        RCNN.cpp RCNN.hpp train.hpp train.cpp data.hpp data.cpp test.cpp test.hpp)
+        RCNN.cpp RCNN.hpp train.hpp train.cpp data.hpp data.cpp test.cpp test.hpp input_parser.cpp input_parser.hpp)
 
 target_link_libraries(spp "${TORCH_LIBRARIES}")
 set_property(TARGET spp PROPERTY CXX_STANDARD 14)

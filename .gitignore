@@ -39,3 +39,4 @@ sourcecp/
 
 # IDEA
 .idea/
+cmake-build-debug/

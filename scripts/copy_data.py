@@ -10,9 +10,9 @@ data_folder = '../trainingdata/'
 gender = 'male'
 for (lang, accent) in languages:
     src = 'samples/' + lang + '/'
-    dest = 'selection/'
+    dest = 'testselection/'
 
-    with open(data_folder + src + 'train.tsv') as tsv_file:
+    with open(data_folder + src + 'test.tsv') as tsv_file:
         csv_reader = csv.reader(tsv_file, 'excel-tab')
 
         row_nr = 0
@@ -38,7 +38,7 @@ for (lang, accent) in languages:
                 approved_ids.append(train_ids[i])
 
         print(str(len(approved_ids)) + "  " + str(approved_ids))
-        selected_ids = random.sample(approved_ids, 596)
+        selected_ids = random.sample(approved_ids, 127)
         print(selected_ids)
 
         cnt = 0

@@ -27,12 +27,11 @@ namespace spp {
                                                    });
 
     std::vector<std::string> langs = {"nl", "en", "de", "fr", "es", "it"};
-    int numFiles = 596;
     std::string save_loc = "../params/serialised.pt";
-
+/*
     int _gen() {
         static int i = 0;
-        i = (i % numFiles);
+        i = (i % NUM_FILES);
         return i++;
     }
 
@@ -42,19 +41,15 @@ namespace spp {
         std::shuffle(out.begin(), out.end(), std::mt19937(std::random_device()()));
         return std::vector<int>(out.begin(), out.begin() + m);
     }
-
-    std::vector<Data> trainingData(const std::string& dir) {
-        size_t trn = TRAIN_FRACTION * langs.size() * numFiles;
-        size_t tst = (1 - TRAIN_FRACTION) * langs.size() * numFiles;
-        std::vector<Data> train, test;
+*/
+    std::vector<Data> trainingData(const std::string& dir, int N) {
+        size_t tN = langs.size() * N;
+        std::vector<Data> files;
         int langIdx = 0;
 
         for (const auto& lang : langs) {
             auto prefix = dir + lang + '_';
-            auto test_ids = distinctRandomList(0, numFiles,
-                                               tst / langs.size() +
-                                               (langIdx < (tst % langs.size())));
-            for (int i = 0; i < numFiles; ++i) {
+            for (int i = 0; i < N; ++i) {
                 auto file = prefix + std::to_string(i) + ".mp3";
                 Data d;
                 d.data = file;
@@ -65,18 +60,11 @@ namespace spp {
                         (lang == "fr") ? Language::FR :
                         (lang == "es") ? Language::ES :
                         Language::IT;
-                if (std::find(test_ids.begin(), test_ids.end(), i) == std::end(test_ids)) {
-                    train.push_back(d); // Not found
-                } else {
-                    test.push_back(d);  // Found
-                }
+                files.push_back(d);
             }
             langIdx++;
         }
-        std::shuffle(train.begin(), train.end(), std::mt19937(std::random_device()()));
-        std::shuffle(test.begin(), test.end(), std::mt19937(std::random_device()()));
-        train.insert(train.end(), test.begin(), test.end());
-        return train;
+        return files;
     }
 
     void normalise(float arr[2][SAMPLE_SIZE]) {
@@ -100,11 +88,10 @@ namespace spp {
         }
     }
 
-    void dumpParameters(RCNN net, const std::string& file) {
-        std::ofstream stream("../params/" + file);
-        stream << net->features->parameters() << net->dense->parameters() << std::endl;
-        stream.close();
-        torch::save(net, save_loc);
+    void dumpParameters(RCNN net, int epoch, int batch) {
+        std::stringstream ss;
+        ss << "../params/params_" << epoch << "-" << batch;
+        torch::save(net, ss.str());
     }
 
     SampleList readFile(const std::string& file) {

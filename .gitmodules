@@ -1,0 +1,3 @@
+[submodule "source/source/classifier/libraries/openmp3"]
+	path = source/source/classifier/libraries/openmp3
+	url = git@github.com:audioboy77/OpenMP3.git

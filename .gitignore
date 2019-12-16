@@ -35,3 +35,7 @@
 trainingdata/
 tensorflow/
 tf-cmake/
+sourcecp/
+
+# IDEA
+.idea/

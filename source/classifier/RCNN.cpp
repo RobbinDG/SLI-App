@@ -75,38 +75,39 @@ RCNNImpl::RCNNImpl(int input_size, int channels) :
                 torch::nn::Conv1d(
                         torch::nn::Conv1dOptions(2, SCALE * 16, 3).stride(3)
                 ), // -> 16 x 768
-                // ---------- BLOCK 1 ---------------
                 torch::nn::Functional(torch::relu),
                 torch::nn::BatchNorm(SCALE * 16),
+                // ---------- BLOCK 1 ---------------
+                torch::nn::Conv1d(
+                        torch::nn::Conv1dOptions(SCALE * 16, SCALE * 16, 3)
+                ), // -> 16 x 766
+                torch::nn::Functional(torch::relu),
+                torch::nn::BatchNorm(SCALE * 16),
+                torch::nn::MaxPool1d(3), // -> 16 x 255
                 torch::nn::Conv1d(
                         torch::nn::Conv1dOptions(SCALE * 16, SCALE * 32, 3)
-                ), // -> 32 x 766
-                torch::nn::Functional(torch::relu),
-                torch::nn::BatchNorm(SCALE * 32),
-                torch::nn::MaxPool1d(3), // -> 32 x 255
-                torch::nn::Conv1d(
-                        torch::nn::Conv1dOptions(SCALE * 32, SCALE * 32, 3)
-                ), // -> 64 x 253
+                ), // -> 32 x 253
                 torch::nn::Functional(torch::relu),
                 torch::nn::BatchNorm(SCALE * 32),
                 torch::nn::MaxPool1d(3), // -> 32 x 84
+                // ---------------------------------
                 // ---------- BLOCK 2 ---------------
                 torch::nn::Conv1d(
-                        torch::nn::Conv1dOptions(SCALE * 32, SCALE * 64, 3)
-                ), // -> 64 x 82
+                        torch::nn::Conv1dOptions(SCALE * 32, SCALE * 32, 3)
+                ), // -> 32 x 82
                 torch::nn::Functional(torch::relu),
-                torch::nn::BatchNorm(SCALE * 64),
-                torch::nn::MaxPool1d(3), // -> 64 x 27
+                torch::nn::BatchNorm(SCALE * 32),
+                torch::nn::MaxPool1d(3), // -> 32 x 27
                 // ---------------------------------
                 torch::nn::Conv1d(
-                        torch::nn::Conv1dOptions(SCALE * 64, SCALE * 128, 3)
-                ), // -> 128 x 25
+                        torch::nn::Conv1dOptions(SCALE * 32, SCALE * 64, 3)
+                ), // -> 64 x 25
                 torch::nn::Functional(torch::relu),
-                torch::nn::BatchNorm(SCALE * 128),
-                torch::nn::MaxPool1d(25) // -> 128 x 1
+                torch::nn::BatchNorm(SCALE * 64),
+                torch::nn::MaxPool1d(25) // -> 64 x 1
         ))),
         dense(register_module("dense", torch::nn::Sequential(
-                torch::nn::Linear(SCALE * 128, 6),
+                torch::nn::Linear(SCALE * 64, 6),
                 torch::nn::Dropout(0.1)
         ))),
         outputFunction(register_module("outputFunction", torch::nn::Functional(torch::relu))) {}

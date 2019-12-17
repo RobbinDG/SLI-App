@@ -1,6 +1,8 @@
 #include <vector>
 #include <random>
 #include "data.hpp"
+#include "test.hpp"
+
 
 namespace spp {
     long _NL[6] = {0};//{1, 0, 0, 0, 0, 0};
@@ -43,7 +45,6 @@ namespace spp {
     }
 */
     std::vector<Data> trainingData(const std::string& dir, int N) {
-        size_t tN = langs.size() * N;
         std::vector<Data> files;
         int langIdx = 0;
 
@@ -86,12 +87,6 @@ namespace spp {
                 for (int x = 0; x < 2; ++x) arr[x][i] /= divs[x];
             }
         }
-    }
-
-    void dumpParameters(RCNN net, int epoch, int batch) {
-        std::stringstream ss;
-        ss << "../params/params_" << epoch << "-" << batch;
-        torch::save(net, ss.str());
     }
 
     SampleList readFile(const std::string& file) {

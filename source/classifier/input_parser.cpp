@@ -25,16 +25,18 @@ void parseAndExecute(RCNN& net, int argc, char** argv) {
                 break;
             case spp::TEST_DIRECTORY:
                 if (argc >= 3) {
-                    std::cout << "Testing files in \"" << argv[1] << "\"\n";
+                    std::cout << "Testing files in \"" << argv[2] << "\"\n";
                     DIR* dirp = opendir(argv[2]);
                     std::vector<spp::Data> v;
                     struct dirent* dp;
+                    std::ofstream stream("../filesread.txt");
                     while ((dp = readdir(dirp)) != nullptr) {
                         char* ss = nullptr;
                         ss = std::strstr(dp->d_name, ".mp3");
                         if (!ss) continue;
                         spp::Data d;
                         std::string str(dp->d_name);
+                        stream << dp->d_name << std::endl;
                         d.data = argv[2] + str;
                         std::string lang(str.begin(), str.begin() + 2);
                         d.language =
@@ -46,6 +48,7 @@ void parseAndExecute(RCNN& net, int argc, char** argv) {
                                 spp::Language::IT;
                         v.emplace_back(d);
                     }
+                    stream.close();
                     closedir(dirp);
                     spp::test(net, v);
                 } else {
@@ -55,7 +58,7 @@ void parseAndExecute(RCNN& net, int argc, char** argv) {
             case spp::TEST_FILE:
                 if (argc >= 3) {
                     std::cout << "Testing \"" << argv[2] << "\"\n";
-                    std::cout << spp::classify(net, argv[2]);
+                    std::cout << spp::classify(net, argv[2]) << std::endl;
                 } else {
                     errorUsage(argv);
                 }

@@ -8,11 +8,12 @@
 #define SAMPLE_SIZE 2304
 #define FRAME_LENGTH 1152
 #define COMPRESSION 5
-#define EPOCH_START 40
-#define EPOCH_LIMIT 40
+#define EPOCH_START 0
+#define EPOCH_LIMIT 5
 
 //#define NUM_FILES 596
 #define DATA_ROOT "../../../trainingdata/"
+#define TRAIN_STATS_FILE "../params/train_stats.csv"
 
 namespace spp {
     extern long _NL[6];
@@ -38,7 +39,7 @@ namespace spp {
         TEST_FILE                    // Requires: file
     };
 
-    typedef struct Data {
+    typedef struct {
         std::string data;
         Language language;
     } Data;
@@ -53,8 +54,6 @@ namespace spp {
     std::vector<int> distinctRandomList(int start, int end, int m);
 
     void normalise(float arr[2][SAMPLE_SIZE]);
-
-    void dumpParameters(RCNN net, int epoch, int batch);
 
     SampleList readFile(const std::string& file);
 

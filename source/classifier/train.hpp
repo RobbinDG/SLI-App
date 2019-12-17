@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RCNN.hpp"
+#include "TestResults.hpp"
 
 namespace spp {
 
@@ -12,7 +13,7 @@ namespace spp {
     /**
      * Trains [net] on files (excluding partition [test_idx]) and trains on partition [test_idx].
      */
-    void train_once(RCNN& net, const std::vector<std::vector<Data>>& files, int test_idx);
+    TestResults train_once(RCNN& net, const std::vector<std::vector<Data>>& files, int test_idx);
 
     /**
      * Executes the train loop on all files

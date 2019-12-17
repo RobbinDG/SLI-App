@@ -4,6 +4,7 @@
 #include "test.hpp"
 #include "train.hpp"
 
+
 namespace spp {
 
     void
@@ -38,22 +39,22 @@ namespace spp {
         // Train while leaving each partition out, once
         for (k = 0; k < K; ++k) {
             std::cout << "Training, excluding batch " << (k + 1) << "/" << K << std::endl;
-            train_once(net, v, k);
-            dumpParameters(net, epoch, k);
+            auto test_results = train_once(net, v, k);
+            dumpParameters(net, test_results, epoch, k);
         }
     }
 
-    void train_once(RCNN& net, const std::vector<std::vector<Data>>& files, int test_idx) {
+    TestResults train_once(RCNN& net, const std::vector<std::vector<Data>>& files, int test_idx) {
         std::vector<Data> v;
         for (size_t i = 0; i < files.size(); ++i) {
             if (i != test_idx) v.insert(v.end(), files[i].begin(), files[i].end());
         }
         train(net, v);
-        test(net, files[test_idx]);
+        return test(net, files[test_idx]);
     }
 
     void train(RCNN& net, const std::vector<Data>& files) {
-        torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(5e-6));
+        torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(1e-4));
 
         OpenMP3::Library openmp3;
         OpenMP3::Decoder decoder(openmp3);

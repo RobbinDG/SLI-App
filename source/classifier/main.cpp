@@ -1,11 +1,7 @@
 #include <iostream>
 #include <random>
 #include "data.hpp"
-#include "train.hpp"
-#include "test.hpp"
 #include "input_parser.hpp"
-#include <sys/types.h>
-#include <dirent.h>
 
 int main(int argc, char** argv) {
     RCNN rcnn(1152, 2);

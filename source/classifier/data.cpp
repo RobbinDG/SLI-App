@@ -3,8 +3,10 @@
 #include "data.hpp"
 #include "test.hpp"
 
-
 namespace spp {
+    const int EPOCH_START = 1, EPOCH_LIMIT = 10;
+    const std::string TRAIN_STATS_FILE = "../params/train_stats.csv";
+
     long _NL[6] = {0};//{1, 0, 0, 0, 0, 0};
     long _EN[6] = {1};//{0, 1, 0, 0, 0, 0};
     long _DE[6] = {2};//{0, 0, 1, 0, 0, 0};
@@ -30,6 +32,7 @@ namespace spp {
 
     std::vector<std::string> langs = {"nl", "en", "de", "fr", "es", "it"};
     std::string save_loc = "../params/serialised.pt";
+
 /*
     int _gen() {
         static int i = 0;
@@ -70,7 +73,7 @@ namespace spp {
 
     void normalise(float arr[2][SAMPLE_SIZE]) {
         float maxs[2] = {-1000.0, -1000.0}, mins[2] = {1000.0, 1000.0};
-        for (int i = 0; i < SAMPLE_SIZE; ++i) {
+        for (size_t i = 0; i < SAMPLE_SIZE; ++i) {
             for (int x = 0; x < 2; ++x) {
                 maxs[x] = std::max(maxs[x], arr[x][i]);
                 mins[x] = std::min(mins[x], arr[x][i]);
@@ -79,12 +82,22 @@ namespace spp {
 
         if (maxs[0] == mins[0] || maxs[1] == mins[1]) {
             // useless frame, probably emtpy. Signal this to calling function
-            arr[0][0] = -1;
+            arr[0][0] = -2;
         } else {
             float divs[2] = {std::max(maxs[0], -mins[0]), std::max(maxs[1], -mins[1])};
-            for (int i = 0; i < SAMPLE_SIZE; ++i) {
-//                for (int x = 0; x < 2; ++x) arr[x][i] = (arr[x][i] - mins[x]) / (maxs[x] - mins[x]);
+            for (size_t i = 0; i < SAMPLE_SIZE; ++i) {
                 for (int x = 0; x < 2; ++x) arr[x][i] /= divs[x];
+            }
+        }
+    }
+
+    void medianFilter(float arr[2][FRAME_LENGTH], int filter_size) {
+        for (int i = 1; i < FRAME_LENGTH - 1; ++i) {
+            for (int ch = 0; ch < 2; ++ch) {
+                float a = arr[ch][i - 1], b = arr[ch][i], c = arr[ch][i + 1];
+                arr[ch][i] = (a <= b && b <= c) || (c <= b && b <= a) ? b :
+                             (b <= a && a <= c) || (c <= a && a <= c) ? a :
+                             c;
             }
         }
     }
@@ -109,6 +122,7 @@ namespace spp {
         for (auto& b : t_buffer) {
             if (it.GetNext(frame)) {
                 decoder.ProcessFrame(frame, b);
+                medianFilter(b, 3);
             } else {
                 for (int i = 0; i < FRAME_LENGTH; ++i) {
                     for (int x = 0; x < 1; ++x) b[x][i] = 0;
@@ -121,8 +135,37 @@ namespace spp {
             buffer[0][i] = t_buffer[s / FRAME_LENGTH][0][s % FRAME_LENGTH];
             buffer[1][i] = t_buffer[s / FRAME_LENGTH][1][s % FRAME_LENGTH];
         }
-        normalise(buffer);
+//        normalise(buffer);
         return hasFrames;
+    }
+
+    void
+    mp3ToSample(std::string file, float buffer[2][SAMPLE_SIZE],
+                OpenMP3::Library& openmp3, OpenMP3::Decoder& decoder) {
+
+        SampleList sl = readFile(file);
+        OpenMP3::Iterator it(openmp3, reinterpret_cast<const OpenMP3::UInt8*>(sl.samples),
+                             sl.length);
+        OpenMP3::Frame frame;
+
+        int frameCnt = 0, q = 0;
+        float t_buffer[FRAMES_PER_SAMPLE][2][FRAME_LENGTH];
+
+        for (auto& b : t_buffer) {
+            if (it.GetNext(frame)) {
+                decoder.ProcessFrame(frame, b);
+                medianFilter(b, 3);
+                q++;
+            }
+        }
+
+        for (int i = 0; i < SAMPLE_SIZE; ++i) {
+            int s = i * COMPRESSION;
+            buffer[0][i] = t_buffer[(s / FRAME_LENGTH) % q][0][s % FRAME_LENGTH];
+            buffer[1][i] = t_buffer[(s / FRAME_LENGTH) % q][1][s % FRAME_LENGTH];
+        }
+        normalise(buffer);
+        delete[] sl.samples;
     }
 
 }

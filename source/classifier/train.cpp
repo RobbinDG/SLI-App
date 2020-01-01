@@ -16,7 +16,7 @@ namespace spp {
         std::vector<std::vector<Data>> buckets(6);
         for (int i = 0; i < 6; ++i) {
             buckets[i] = std::vector<Data>(files.begin() + i * N,
-                                                  files.begin() + (i + 1) * N);
+                                           files.begin() + (i + 1) * N);
             std::shuffle(buckets[i].begin(), buckets[i].end(),
                          std::mt19937(std::random_device()()));
         }
@@ -54,7 +54,7 @@ namespace spp {
     }
 
     void train(RCNN& net, const std::vector<Data>& files) {
-        torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(1e-4));
+        torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(5e-5));
 
         OpenMP3::Library openmp3;
         OpenMP3::Decoder decoder(openmp3);
@@ -62,22 +62,16 @@ namespace spp {
         float buffer[2][SAMPLE_SIZE];
 
         for (const auto& file : files) {
-            SampleList sl = readFile(file.data);
-            OpenMP3::Iterator it(openmp3, reinterpret_cast<const OpenMP3::UInt8*>(sl.samples),
-                                 sl.length);
+            mp3ToSample(file.data, buffer, openmp3, decoder);
+            if (buffer[0][0] != -2) {
+                auto input = torch::from_blob(buffer, {2, SAMPLE_SIZE}).unsqueeze(0);
 
-            while (getTrainData(it, decoder, buffer)) {
-                if (buffer[0][0] != -1) {
-                    auto input = torch::from_blob(buffer, {2, SAMPLE_SIZE}).unsqueeze(0);
-
-                    net->zero_grad();
-                    auto output = net->forward(input);
-                    auto loss = torch::nll_loss(output.squeeze(0), LABELS[file.language]);
-                    loss.backward();
-                    optimizer.step();
-                }
+                net->zero_grad();
+                auto output = net->forward(input);
+                auto loss = torch::nll_loss(output.squeeze(0), LABELS[file.language]);
+                loss.backward();
+                optimizer.step();
             }
-            delete[] sl.samples;
         }
     }
 /*

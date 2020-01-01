@@ -4,18 +4,12 @@
 #include "RCNN.hpp"
 #include "libraries/openmp3/openmp3.h"
 
-#define TRAIN_CYCLE 400
-#define SAMPLE_SIZE 2304
-#define FRAME_LENGTH 1152
-#define COMPRESSION 5
-#define EPOCH_START 0
-#define EPOCH_LIMIT 5
-
-//#define NUM_FILES 596
-#define DATA_ROOT "../../../trainingdata/"
-#define TRAIN_STATS_FILE "../params/train_stats.csv"
-
 namespace spp {
+    extern const int EPOCH_START, EPOCH_LIMIT;
+    constexpr int FRAME_LENGTH = 1152, COMPRESSION = 5, FRAMES_PER_SAMPLE = 96,
+            SAMPLE_SIZE = FRAMES_PER_SAMPLE * FRAME_LENGTH / COMPRESSION;
+    extern const std::string TRAIN_STATS_FILE;
+
     extern long _NL[6];
     extern long _EN[6];
     extern long _DE[6];
@@ -53,11 +47,16 @@ namespace spp {
 
     std::vector<int> distinctRandomList(int start, int end, int m);
 
-    void normalise(float arr[2][SAMPLE_SIZE]);
+    void normalise(float buffer[2][SAMPLE_SIZE]);
+
+    void medianFilter(float arr[2][SAMPLE_SIZE], int filter_size);
 
     SampleList readFile(const std::string& file);
 
     bool getTrainData(OpenMP3::Iterator& it, OpenMP3::Decoder& decoder,
                       float buffer[2][SAMPLE_SIZE]);
 
+    void
+    mp3ToSample(std::string file, float buffer[2][SAMPLE_SIZE],
+                OpenMP3::Library& openmp3, OpenMP3::Decoder& decoder);
 }

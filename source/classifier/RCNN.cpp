@@ -71,40 +71,46 @@ torch::Tensor RCNNImpl::forward(const torch::Tensor& input, const torch::Tensor&
 
 RCNNImpl::RCNNImpl(int input_size, int channels) :
         features(register_module("features", torch::nn::Sequential(
-                // Input: 2 x 2304
+                // Input: 2 x 22118
                 torch::nn::Conv1d(
                         torch::nn::Conv1dOptions(2, SCALE * 16, 3).stride(3)
-                ), // -> 16 x 768
+                ), // -> 16 x 7372
                 torch::nn::Functional(torch::relu),
                 torch::nn::BatchNorm(SCALE * 16),
                 // ---------- BLOCK 1 ---------------
                 torch::nn::Conv1d(
                         torch::nn::Conv1dOptions(SCALE * 16, SCALE * 16, 3)
-                ), // -> 16 x 766
+                ), // -> 16 x 7370
                 torch::nn::Functional(torch::relu),
                 torch::nn::BatchNorm(SCALE * 16),
-                torch::nn::MaxPool1d(3), // -> 16 x 255
+                torch::nn::MaxPool1d(3), // -> 16 x 2456
+                torch::nn::Conv1d(
+                        torch::nn::Conv1dOptions(SCALE * 16, SCALE * 16, 3)
+                ), // -> 32 x 2454
+                torch::nn::Functional(torch::relu),
+                torch::nn::BatchNorm(SCALE * 16),
+                torch::nn::MaxPool1d(3), // -> 32 x 818
+                // ---------------------------------
                 torch::nn::Conv1d(
                         torch::nn::Conv1dOptions(SCALE * 16, SCALE * 32, 3)
-                ), // -> 32 x 253
+                ), // -> 32 x 816
                 torch::nn::Functional(torch::relu),
                 torch::nn::BatchNorm(SCALE * 32),
-                torch::nn::MaxPool1d(3), // -> 32 x 84
-                // ---------------------------------
+                torch::nn::MaxPool1d(3), // -> 32 x 272
                 // ---------- BLOCK 2 ---------------
                 torch::nn::Conv1d(
                         torch::nn::Conv1dOptions(SCALE * 32, SCALE * 32, 3)
-                ), // -> 32 x 82
+                ), // -> 32 x 270
                 torch::nn::Functional(torch::relu),
                 torch::nn::BatchNorm(SCALE * 32),
-                torch::nn::MaxPool1d(3), // -> 32 x 27
+                torch::nn::MaxPool1d(3), // -> 32 x 90
                 // ---------------------------------
                 torch::nn::Conv1d(
                         torch::nn::Conv1dOptions(SCALE * 32, SCALE * 64, 3)
-                ), // -> 64 x 25
+                ), // -> 64 x 88
                 torch::nn::Functional(torch::relu),
                 torch::nn::BatchNorm(SCALE * 64),
-                torch::nn::MaxPool1d(25) // -> 64 x 1
+                torch::nn::MaxPool1d(88) // -> 64 x 1
         ))),
         dense(register_module("dense", torch::nn::Sequential(
                 torch::nn::Linear(SCALE * 64, 6),

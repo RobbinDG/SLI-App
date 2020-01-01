@@ -12,29 +12,18 @@ namespace spp {
         TestResults results;
 
         for (const auto& file : files) {
-            SampleList sl = readFile(file.data);
-            OpenMP3::Iterator it(openmp3, reinterpret_cast<const OpenMP3::UInt8*>(sl.samples),
-                                 sl.length);
-            int frame_idx = 0;
+            mp3ToSample(file.data, buffer, openmp3, decoder);
             torch::Tensor output;
-            torch::Tensor avg_loss = torch::zeros({1});
-            torch::Tensor avg_output = torch::zeros({1, 1, 6});
+            torch::Tensor loss;
 
-            while (getTrainData(it, decoder, buffer)) {
+            if (buffer[0][0] != -2) {
                 auto input = torch::from_blob(buffer, {2, SAMPLE_SIZE}).unsqueeze(0);
 
                 torch::NoGradGuard no_grad_guard;
                 output = net->forward(input);
-                auto loss = torch::nll_loss(output.squeeze(0), LABELS[file.language]);
-
-                avg_loss += loss;
-                avg_output += output;
-                frame_idx++;
+                loss = torch::nll_loss(output.squeeze(0), LABELS[file.language]);
+                results.registerTest(loss.data_ptr<float>()[0], output, file.language);
             }
-
-            results.registerTest(avg_loss.data_ptr<float>()[0] / frame_idx, avg_output / frame_idx,
-                                 file.language);
-            delete[] sl.samples;
         }
 
         results.print();
@@ -42,33 +31,24 @@ namespace spp {
     }
 
     Language classify(RCNN net, const std::string& file) {
-        SampleList sl = readFile(file);
         float buffer[2][SAMPLE_SIZE];
 
         OpenMP3::Library openmp3;
         OpenMP3::Decoder decoder(openmp3);
-        OpenMP3::Iterator it(openmp3, reinterpret_cast<const OpenMP3::UInt8*>(sl.samples),
-                             sl.length);
-        int frame_idx = 0;
         torch::Tensor output;
-        torch::Tensor avg_output = torch::zeros({1, 1, 6});
 
-        while (getTrainData(it, decoder, buffer)) {
-            auto input = torch::from_blob(buffer, {2, SAMPLE_SIZE}).unsqueeze(0);
 
-            torch::NoGradGuard no_grad_guard;
-            output = net->forward(input);
-            avg_output += output;
-            frame_idx++;
-        }
-        torch::Tensor out_true = avg_output / frame_idx;
-        delete[] sl.samples;
+        mp3ToSample(file, buffer, openmp3, decoder);
+        auto input = torch::from_blob(buffer, {2, SAMPLE_SIZE}).unsqueeze(0);
+        std::cout << input << std::endl;
+
+        torch::NoGradGuard no_grad_guard;
 
         int max_i = -1;
         float m = -1000.0;
         for (int i = 0; i < 6; ++i) {
-            if (out_true.data_ptr<float>()[i] > m) {
-                m = out_true.data_ptr<float>()[i];
+            if (output.data_ptr<float>()[i] > m) {
+                m = output.data_ptr<float>()[i];
                 max_i = i;
             }
         }

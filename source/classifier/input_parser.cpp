@@ -14,7 +14,7 @@ void parseAndExecute(RCNN& net, int argc, char** argv) {
         switch (std::atoi(argv[1])) {
             case spp::K_FOLD_CROSS_VALIDATION:
                 if (argc >= 5) {
-                    for (int epoch = EPOCH_START; epoch < EPOCH_LIMIT; ++epoch) {
+                    for (int epoch = spp::EPOCH_START; epoch < spp::EPOCH_LIMIT; ++epoch) {
                         auto data = spp::trainingData(argv[4], std::atoi(argv[2]));
                         spp::k_fold_cross_validation(net, data,
                                                      std::atoi(argv[3]), epoch);

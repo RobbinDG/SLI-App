@@ -63,6 +63,12 @@ void parseAndExecute(RCNN& net, int argc, char** argv) {
                     errorUsage(argv);
                 }
                 break;
+            default:
+                std::cout << spp::classify(net, "../../../trainingdata/testselection/nl_0.mp3") << std::endl;
+                std::cout << spp::classify(net, "../../../trainingdata/testselection/nl_1.mp3", true) << std::endl;
+                std::cout << spp::classify(net, "../../../trainingdata/testselection/nl_0.mp3") << std::endl;
+                std::cout << spp::classify(net, "../../../trainingdata/testselection/nl_1.mp3", true) << std::endl;
+                break;
         }
     } else {
         errorUsage(argv);

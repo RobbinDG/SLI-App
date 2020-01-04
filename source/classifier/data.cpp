@@ -4,7 +4,7 @@
 #include "test.hpp"
 
 namespace spp {
-    const int EPOCH_START = 1, EPOCH_LIMIT = 10;
+    const int EPOCH_START = 2, EPOCH_LIMIT = 10;
     const std::string TRAIN_STATS_FILE = "../params/train_stats.csv";
 
     long _NL[6] = {0};//{1, 0, 0, 0, 0, 0};
@@ -33,20 +33,6 @@ namespace spp {
     std::vector<std::string> langs = {"nl", "en", "de", "fr", "es", "it"};
     std::string save_loc = "../params/serialised.pt";
 
-/*
-    int _gen() {
-        static int i = 0;
-        i = (i % NUM_FILES);
-        return i++;
-    }
-
-    std::vector<int> distinctRandomList(int start, int end, int m) {
-        std::vector<int> out(end - start);
-        std::generate(out.begin(), out.end(), [start]() { return start + _gen(); });
-        std::shuffle(out.begin(), out.end(), std::mt19937(std::random_device()()));
-        return std::vector<int>(out.begin(), out.begin() + m);
-    }
-*/
     std::vector<Data> trainingData(const std::string& dir, int N) {
         std::vector<Data> files;
         int langIdx = 0;
@@ -140,22 +126,26 @@ namespace spp {
     }
 
     void
-    mp3ToSample(std::string file, float buffer[2][SAMPLE_SIZE],
-                OpenMP3::Library& openmp3, OpenMP3::Decoder& decoder) {
+    mp3ToSample(const std::string& file, float buffer[2][SAMPLE_SIZE]) {
+
+        OpenMP3::Library openmp3;
+        OpenMP3::Decoder dec(openmp3);
 
         SampleList sl = readFile(file);
         OpenMP3::Iterator it(openmp3, reinterpret_cast<const OpenMP3::UInt8*>(sl.samples),
                              sl.length);
         OpenMP3::Frame frame;
 
-        int frameCnt = 0, q = 0;
+        int q = 0;
         float t_buffer[FRAMES_PER_SAMPLE][2][FRAME_LENGTH];
 
         for (auto& b : t_buffer) {
             if (it.GetNext(frame)) {
-                decoder.ProcessFrame(frame, b);
+                dec.ProcessFrame(frame, b);
                 medianFilter(b, 3);
                 q++;
+            } else {
+                break;
             }
         }
 

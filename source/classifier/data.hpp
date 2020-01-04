@@ -57,6 +57,5 @@ namespace spp {
                       float buffer[2][SAMPLE_SIZE]);
 
     void
-    mp3ToSample(std::string file, float buffer[2][SAMPLE_SIZE],
-                OpenMP3::Library& openmp3, OpenMP3::Decoder& decoder);
+    mp3ToSample(const std::string& file, float buffer[2][SAMPLE_SIZE]);
 }

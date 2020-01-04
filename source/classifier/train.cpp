@@ -54,15 +54,12 @@ namespace spp {
     }
 
     void train(RCNN& net, const std::vector<Data>& files) {
-        torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(5e-5));
-
-        OpenMP3::Library openmp3;
-        OpenMP3::Decoder decoder(openmp3);
+        torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(1e-4));
 
         float buffer[2][SAMPLE_SIZE];
 
         for (const auto& file : files) {
-            mp3ToSample(file.data, buffer, openmp3, decoder);
+            mp3ToSample(file.data, buffer);
             if (buffer[0][0] != -2) {
                 auto input = torch::from_blob(buffer, {2, SAMPLE_SIZE}).unsqueeze(0);
 

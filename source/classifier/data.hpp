@@ -51,6 +51,8 @@ namespace spp {
 
     void medianFilter(float arr[2][SAMPLE_SIZE], int filter_size);
 
+    float** stereoToMono(float arr[2][SAMPLE_SIZE]);
+
     SampleList readFile(const std::string& file);
 
     bool getTrainData(OpenMP3::Iterator& it, OpenMP3::Decoder& decoder,

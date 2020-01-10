@@ -10,13 +10,13 @@ namespace spp {
             auto* result = new TestResult();
 
             for (const auto& file : _files) {
-                float buffer[2][SAMPLE_SIZE];
+                float buffer[1][SAMPLE_SIZE];
                 mp3ToSample(file.data, buffer);
                 torch::Tensor output;
                 torch::Tensor loss;
 
                 if (buffer[0][0] != -2) {
-                    auto input = torch::from_blob(buffer, {2, SAMPLE_SIZE}).unsqueeze(0);
+                    auto input = torch::from_blob(buffer, {1, SAMPLE_SIZE}).unsqueeze(0);
 
                     torch::NoGradGuard no_grad_guard;
                     output = net->forward(input);

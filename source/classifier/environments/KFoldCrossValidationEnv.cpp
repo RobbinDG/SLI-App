@@ -48,6 +48,7 @@ namespace spp {
                 std::cout << "Training, excluding batch " << (k + 1) << "/" << _K << std::endl;
                 auto test_results = train_once(net, v, k);
                 dumpParameters(net, *test_results, epoch, k);
+                delete test_results;
             }
         }
 
@@ -64,14 +65,14 @@ namespace spp {
         }
 
         void KFoldCrossValidationEnv::train(RCNN& net, const std::vector<Data>& files) {
-            torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(5e-5));
+            torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(_learning_rate));
 
-            float buffer[2][SAMPLE_SIZE];
+            float buffer[1][SAMPLE_SIZE];
 
             for (const auto& file : files) {
                 mp3ToSample(file.data, buffer);
                 if (buffer[0][0] != -2) {
-                    auto input = torch::from_blob(buffer, {2, SAMPLE_SIZE}).unsqueeze(0);
+                    auto input = torch::from_blob(buffer, {1, SAMPLE_SIZE}).unsqueeze(0);
 
                     net->zero_grad();
                     auto output = net->forward(input);

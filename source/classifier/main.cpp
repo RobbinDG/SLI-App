@@ -4,7 +4,7 @@
 #include "input_parser.hpp"
 
 int main(int argc, char** argv) {
-    RCNN rcnn(1152, 2);
+    RCNN rcnn;
 
     std::ifstream fs(spp::save_loc);
     if (fs.good()) {

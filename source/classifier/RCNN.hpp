@@ -6,7 +6,7 @@
 #define SCALE 1
 
 struct RCNNImpl : torch::nn::Module {
-    RCNNImpl(int input_size, int channels);
+    RCNNImpl();
 
     torch::Tensor forward(const torch::Tensor& input);
 

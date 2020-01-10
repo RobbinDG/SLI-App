@@ -57,22 +57,20 @@ namespace spp {
         return files;
     }
 
-    void normalise(float arr[2][SAMPLE_SIZE]) {
-        float maxs[2] = {-1000.0, -1000.0}, mins[2] = {1000.0, 1000.0};
+    void normalise(float arr[1][SAMPLE_SIZE]) {
+        float max = -1000.0, min = 1000.0;
         for (size_t i = 0; i < SAMPLE_SIZE; ++i) {
-            for (int x = 0; x < 2; ++x) {
-                maxs[x] = std::max(maxs[x], arr[x][i]);
-                mins[x] = std::min(mins[x], arr[x][i]);
-            }
+            max = std::max(max, arr[0][i]);
+            min = std::min(min, arr[0][i]);
         }
 
-        if (maxs[0] == mins[0] || maxs[1] == mins[1]) {
+        if (max == min) {
             // useless frame, probably emtpy. Signal this to calling function
             arr[0][0] = -2;
         } else {
-            float divs[2] = {std::max(maxs[0], -mins[0]), std::max(maxs[1], -mins[1])};
+            float div = std::max(max, -min);
             for (size_t i = 0; i < SAMPLE_SIZE; ++i) {
-                for (int x = 0; x < 2; ++x) arr[x][i] /= divs[x];
+                arr[0][i] /= div;
             }
         }
     }
@@ -88,6 +86,10 @@ namespace spp {
         }
     }
 
+    void stereoToMono(float arr[2][FRAME_LENGTH], float arr2[1][FRAME_LENGTH]) {
+        for (int i = 0; i < FRAME_LENGTH; ++i) arr2[0][i] = (arr[0][i] + arr[1][i]) / 2;
+    }
+
     SampleList readFile(const std::string& file) {
         std::ifstream fl(file);
         fl.seekg(0, std::ios::end);
@@ -100,18 +102,19 @@ namespace spp {
     }
 
     bool getTrainData(OpenMP3::Iterator& it, OpenMP3::Decoder& decoder,
-                      float buffer[2][SAMPLE_SIZE]) {
+                      float buffer[1][SAMPLE_SIZE]) {
         OpenMP3::Frame frame;
-        float t_buffer[COMPRESSION * (SAMPLE_SIZE / FRAME_LENGTH)][2][FRAME_LENGTH];
+        float t_buffer[COMPRESSION * (SAMPLE_SIZE / FRAME_LENGTH)][1][FRAME_LENGTH];
 
         bool hasFrames = true;
         for (auto& b : t_buffer) {
             if (it.GetNext(frame)) {
-                decoder.ProcessFrame(frame, b);
-                medianFilter(b, 3);
+                float stereo[2][FRAME_LENGTH];
+                decoder.ProcessFrame(frame, stereo);
+                stereoToMono(stereo, b);
             } else {
                 for (int i = 0; i < FRAME_LENGTH; ++i) {
-                    for (int x = 0; x < 1; ++x) b[x][i] = 0;
+                    for (auto& x : b) x[i] = 0;
                 }
                 hasFrames = false;
             }
@@ -119,14 +122,13 @@ namespace spp {
         for (int i = 0; i < SAMPLE_SIZE; ++i) {
             int s = i * COMPRESSION;
             buffer[0][i] = t_buffer[s / FRAME_LENGTH][0][s % FRAME_LENGTH];
-            buffer[1][i] = t_buffer[s / FRAME_LENGTH][1][s % FRAME_LENGTH];
         }
-//        normalise(buffer);
+        normalise(buffer);
         return hasFrames;
     }
 
     void
-    mp3ToSample(const std::string& file, float buffer[2][SAMPLE_SIZE]) {
+    mp3ToSample(const std::string& file, float buffer[1][SAMPLE_SIZE]) {
 
         OpenMP3::Library openmp3;
         OpenMP3::Decoder dec(openmp3);
@@ -137,22 +139,30 @@ namespace spp {
         OpenMP3::Frame frame;
 
         int q = 0;
-        float t_buffer[FRAMES_PER_SAMPLE][2][FRAME_LENGTH];
+        float t_buffer[FRAMES_PER_SAMPLE][1][FRAME_LENGTH];
+        bool framesLeft = true;
 
         for (auto& b : t_buffer) {
             if (it.GetNext(frame)) {
-                dec.ProcessFrame(frame, b);
+                float stereo[2][FRAME_LENGTH];
+                dec.ProcessFrame(frame, stereo);
+                stereoToMono(stereo, b);
                 medianFilter(b, 3);
                 q++;
             } else {
+                framesLeft = false;
                 break;
             }
+        }
+
+        // consume remaining frames
+        if (framesLeft) {
+            while(it.GetNext(frame));
         }
 
         for (int i = 0; i < SAMPLE_SIZE; ++i) {
             int s = i * COMPRESSION;
             buffer[0][i] = t_buffer[(s / FRAME_LENGTH) % q][0][s % FRAME_LENGTH];
-            buffer[1][i] = t_buffer[(s / FRAME_LENGTH) % q][1][s % FRAME_LENGTH];
         }
         normalise(buffer);
         delete[] sl.samples;

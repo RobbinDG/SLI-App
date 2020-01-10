@@ -1,28 +1,29 @@
 #include <cstdlib>
 #include <dirent.h>
 #include "data.hpp"
-#include "train.hpp"
 #include "test.hpp"
+#include "input_parser.hpp"
+#include "environments/KFoldCrossValidationEnv.hpp"
+#include "environments/TestEnvironment.hpp"
+#include "environments/ClassifyEnvironment.hpp"
 
 void errorUsage(char** argv) {
     std::cerr << "Usage: " << argv[0] << " <method> <parameters...>";
     exit(EXIT_FAILURE);
 }
 
-void parseAndExecute(RCNN& net, int argc, char** argv) {
+std::unique_ptr<spp::envs::ExecEnvironment> parse(int argc, char** argv) {
+    using namespace spp::envs;
     if (argc > 1) {
         switch (std::atoi(argv[1])) {
             case spp::K_FOLD_CROSS_VALIDATION:
                 if (argc >= 5) {
-                    for (int epoch = spp::EPOCH_START; epoch < spp::EPOCH_LIMIT; ++epoch) {
-                        auto data = spp::trainingData(argv[4], std::atoi(argv[2]));
-                        spp::k_fold_cross_validation(net, data,
-                                                     std::atoi(argv[3]), epoch);
-                    }
+                    auto data = spp::trainingData(argv[4], std::atoi(argv[2]));
+                    KFoldCrossValidationEnv env(data, std::atoi(argv[3]), 1e-4, 0);
+                    return std::make_unique<KFoldCrossValidationEnv>(env);
                 } else {
                     errorUsage(argv);
                 }
-                break;
             case spp::TEST_DIRECTORY:
                 if (argc >= 3) {
                     std::cout << "Testing files in \"" << argv[2] << "\"\n";
@@ -50,28 +51,24 @@ void parseAndExecute(RCNN& net, int argc, char** argv) {
                     }
                     stream.close();
                     closedir(dirp);
-                    spp::test(net, v);
+
+                    TestEnvironment env(v);
+                    return std::make_unique<TestEnvironment>(v);
                 } else {
                     errorUsage(argv);
                 }
-                break;
             case spp::TEST_FILE:
                 if (argc >= 3) {
                     std::cout << "Testing \"" << argv[2] << "\"\n";
-                    std::cout << spp::classify(net, argv[2]) << std::endl;
+                    ClassifyEnvironment env(argv[2]);
+                    return std::make_unique<ClassifyEnvironment>(env);
                 } else {
                     errorUsage(argv);
                 }
-                break;
-            default:
-                std::cout << spp::classify(net, "../../../trainingdata/testselection/nl_0.mp3") << std::endl;
-                std::cout << spp::classify(net, "../../../trainingdata/testselection/nl_1.mp3", true) << std::endl;
-                std::cout << spp::classify(net, "../../../trainingdata/testselection/nl_0.mp3") << std::endl;
-                std::cout << spp::classify(net, "../../../trainingdata/testselection/nl_1.mp3", true) << std::endl;
-                break;
         }
     } else {
         errorUsage(argv);
     }
+    return nullptr;
 }
 

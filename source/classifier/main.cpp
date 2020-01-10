@@ -12,7 +12,10 @@ int main(int argc, char** argv) {
         std::cout << "Successfully loaded model from file" << std::endl;
     }
 
-    parseAndExecute(rcnn, argc, argv);
+    auto env = parse(argc, argv);
+    auto result = env->run(rcnn);
+    result->print();
+    delete result;
 
     return 0;
 }

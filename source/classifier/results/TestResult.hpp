@@ -3,10 +3,11 @@
 #include <vector>
 #include <string>
 #include <torch/torch.h>
-#include "data.hpp"
+#include "../data.hpp"
+#include "VoidResult.hpp"
 
 namespace spp {
-    class TestResults {
+    class TestResult : public VoidResult {
     private:
         float avg_loss, l_min, l_max, sd, p_correct;
         int n_correct;
@@ -23,11 +24,11 @@ namespace spp {
 
     public:
 
-        TestResults();
+        TestResult();
 
         void registerTest(float loss, const torch::Tensor& output, Language label);
 
-        void print();
+        void print() override;
 
         std::string printCSV();
     };

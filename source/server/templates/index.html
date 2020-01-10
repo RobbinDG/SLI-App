@@ -1,0 +1,36 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Title{% endblock %}
+
+{% block styles %}
+	{{ super() }}
+	<link rel="stylesheet" href="{{ url_for('.static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+	<div class="container fill">
+		<div class="row h-100 align-items-center">
+			<div class="col">
+				<div class="row">
+					<div class="col text-center">
+						<button id="start" onclick="startRecording()" class="btn btn-lg btn-success mr-3">Start
+						</button>
+						<button id="stop" onclick="stopRecording()" class="btn btn-lg btn-danger ml-3">Stop
+						</button>
+						<a id="download">Download</a>
+					</div>
+				</div>
+				<div class="row mt-5">
+					<div class="col text-center">
+						<audio id="player" controls></audio>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ url_for('static', filename='audioinput.js') }}"></script>
+	{{ super() }}
+{% endblock %}

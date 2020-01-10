@@ -4,7 +4,7 @@
 #include "test.hpp"
 
 namespace spp {
-    const int EPOCH_START = 2, EPOCH_LIMIT = 10;
+    const int EPOCH_START = 3, EPOCH_LIMIT = 10;
     const std::string TRAIN_STATS_FILE = "../params/train_stats.csv";
 
     long _NL[6] = {0};//{1, 0, 0, 0, 0, 0};

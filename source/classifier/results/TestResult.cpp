@@ -1,7 +1,7 @@
-#include "TestResults.hpp"
+#include "TestResult.hpp"
 
 namespace spp {
-    int TestResults::updateMatrix(const torch::Tensor& output, int lang) {
+    int TestResult::updateMatrix(const torch::Tensor& output, int lang) {
         float vals[6];
         int classified = 0;
         for (int i = 0; i < 6; ++i) vals[i] = output.data_ptr<float>()[i];
@@ -24,7 +24,7 @@ namespace spp {
         return classified;
     }
 
-    void TestResults::printMatrix() {
+    void TestResult::printMatrix() {
         std::cout << "  NL  |  EN  |  DE  |  FR  |  ES  |  IT  |\n"
                   << "------+------+------+------+------+------+\n";
         for (auto& i : matrix) {
@@ -35,7 +35,7 @@ namespace spp {
         }
     }
 
-    float TestResults::stddev() {
+    float TestResult::stddev() {
         float std = 0;
         float mean = 0;
         for (auto& v : losses) mean += v;
@@ -45,11 +45,11 @@ namespace spp {
     }
 
 
-    TestResults::TestResults() : avg_loss(-1), l_min(1000.0), l_max(-1000.0), n_correct(0), sd(-1),
-                                 p_correct(-1) {
+    TestResult::TestResult() : avg_loss(-1), l_min(1000.0), l_max(-1000.0), n_correct(0), sd(-1),
+                               p_correct(-1) {
     }
 
-    void TestResults::registerTest(float loss, const torch::Tensor& output, Language label) {
+    void TestResult::registerTest(float loss, const torch::Tensor& output, Language label) {
         losses.push_back(loss);
         int classified = updateMatrix(output, label);
         if (label == classified) n_correct++;
@@ -57,7 +57,7 @@ namespace spp {
         l_min = std::min(l_min, loss);
     }
 
-    void TestResults::calculate() {
+    void TestResult::calculate() {
         sd = stddev();
         avg_loss = 0;
         for (auto& v : losses) avg_loss += v;
@@ -65,7 +65,7 @@ namespace spp {
         p_correct = static_cast<float>(n_correct) / losses.size();
     }
 
-    void TestResults::print() {
+    void TestResult::print() {
         calculate();
         std::cout << "Average Loss: " << avg_loss << std::endl
                   << "Max Loss: " << l_max << ", Min Loss: " << l_min << std::endl
@@ -76,7 +76,7 @@ namespace spp {
         std::cout << std::endl << "______________________________________" << std::endl;
     }
 
-    std::string TestResults::printCSV() {
+    std::string TestResult::printCSV() {
         calculate();
         std::stringstream ss;
         ss << avg_loss << "," << l_max << "," << l_min << "," << sd << "," << n_correct << ","

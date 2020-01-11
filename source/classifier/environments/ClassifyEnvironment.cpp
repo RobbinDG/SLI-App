@@ -19,8 +19,6 @@ namespace spp {
             torch::NoGradGuard no_grad_guard;
             output = net->forward(input);
 
-            std::cout << output << std::endl;
-
             int max_i = -1;
             float m = -1000.0;
             for (int i = 0; i < 6; ++i) {

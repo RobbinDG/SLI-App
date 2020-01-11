@@ -50,6 +50,9 @@ async function startRecording() {
 
 async function stopRecording() {
     const audio = await recorder.stop();
+
+    document.getElementById("lang").innerText = "Working...";
+
     document.getElementById("player").src = audio.audio.src;
     console.log(audio.audioUrl);
 
@@ -57,11 +60,26 @@ async function stopRecording() {
 
     let formdata = new FormData();
     formdata.append("oggfile", file);
-    request("/transfer_ogg", formdata, (_) => {}, () => {});
+    request("/transfer_ogg", formdata, (data) => {
+        document.getElementById("lang").innerText = idxToLanguage(data.language);
+    }, () => {});
 }
 
 function blobToFile(theBlob, fileName) {
     theBlob.lastModifiedDate = new Date();
     theBlob.name = fileName;
     return theBlob;
+}
+
+function idxToLanguage(index) {
+    console.log("here");
+    switch (index) {
+        case 0: return "Dutch / Nederlands";
+        case 1: return "English";
+        case 2: return "German / Deutsch";
+        case 3: return "French / Francais";
+        case 4: return "Italian / Italiano";
+        case 5: return "Spanish / Espaniol";
+        default: return "Something went wrong: " + index;
+    }
 }

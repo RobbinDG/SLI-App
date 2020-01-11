@@ -50,9 +50,18 @@ async function startRecording() {
 
 async function stopRecording() {
     const audio = await recorder.stop();
-    document.getElementById("player").src = (audio.audio.src);
+    document.getElementById("player").src = audio.audio.src;
     console.log(audio.audioUrl);
-    var link = document.getElementById("download");
-    link.href = audio.audioUrl;
-    link.download = "aDefaultFileName.ogg";
+
+    let file = blobToFile(audio.audioBlob, "recording.ogg");
+
+    let formdata = new FormData();
+    formdata.append("oggfile", file);
+    request("/transfer_ogg", formdata, (_) => {}, () => {});
+}
+
+function blobToFile(theBlob, fileName) {
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName;
+    return theBlob;
 }

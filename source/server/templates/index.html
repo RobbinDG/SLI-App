@@ -17,7 +17,6 @@
 						</button>
 						<button id="stop" onclick="stopRecording()" class="btn btn-lg btn-danger ml-3">Stop
 						</button>
-						<a id="download">Download</a>
 					</div>
 				</div>
 				<div class="row mt-5">
@@ -31,6 +30,7 @@
 {% endblock %}
 
 {% block scripts %}
+	<script src="{{ url_for('static', filename='request.js') }}"></script>
 	<script src="{{ url_for('static', filename='audioinput.js') }}"></script>
 	{{ super() }}
 {% endblock %}

@@ -7,6 +7,8 @@ namespace spp {
         }
 
         TestResult* TestEnvironment::run(RCNN net) {
+            net->eval();
+
             auto* result = new TestResult();
 
             for (const auto& file : _files) {

@@ -25,7 +25,6 @@ namespace spp {
     extern std::map<Language, const torch::Tensor> LABELS;
 
     extern std::vector<std::string> langs;
-    extern std::string save_loc;
 
     enum Modes {
         K_FOLD_CROSS_VALIDATION = 0, // Requires: samples/language (N), groups (K), directory

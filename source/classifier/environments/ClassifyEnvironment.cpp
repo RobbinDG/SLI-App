@@ -8,6 +8,8 @@ namespace spp {
         }
 
         ClassifyResult* ClassifyEnvironment::run(RCNN net) {
+            net->eval();
+
             float buffer[1][SAMPLE_SIZE];
             torch::Tensor output;
 
@@ -17,6 +19,7 @@ namespace spp {
             torch::NoGradGuard no_grad_guard;
             output = net->forward(input);
 
+            std::cout << output << std::endl;
 
             int max_i = -1;
             float m = -1000.0;

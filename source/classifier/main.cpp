@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
     if (argc >= 2) {
         std::ifstream fs(argv[1]);
         if (fs.good()) {
-            torch::load(rcnn, spp::save_loc);
+            torch::load(rcnn, argv[1]);
             std::cout << "Successfully loaded model from file" << std::endl;
         }
     }

@@ -8,7 +8,7 @@ namespace spp {
 
         class TestEnvironment : public ExecEnvironment {
         private:
-            std::vector<Data>& _files;
+            std::vector<Data> _files;
 
         public:
             explicit TestEnvironment(std::vector<Data>& files);

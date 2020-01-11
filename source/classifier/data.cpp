@@ -30,7 +30,6 @@ namespace spp {
                                                    });
 
     std::vector<std::string> langs = {"nl", "en", "de", "fr", "es", "it"};
-    std::string save_loc = "../params/serialised.pt";
 
     std::vector<Data> trainingData(const std::string& dir, int N) {
         std::vector<Data> files;

@@ -1,7 +1,6 @@
 #include <vector>
 #include <random>
 #include "data.hpp"
-#include "test.hpp"
 
 namespace spp {
     const int EPOCH_START = 3, EPOCH_LIMIT = 10;
@@ -86,6 +85,10 @@ namespace spp {
         }
     }
 
+    void compressMono(float arr[2][FRAME_LENGTH], float arr2[1][FRAME_LENGTH]) {
+        for (int i = 0; i < FRAME_LENGTH; ++i) arr2[0][i] = arr[0][i];
+    }
+
     void stereoToMono(float arr[2][FRAME_LENGTH], float arr2[1][FRAME_LENGTH]) {
         for (int i = 0; i < FRAME_LENGTH; ++i) arr2[0][i] = (arr[0][i] + arr[1][i]) / 2;
     }
@@ -129,7 +132,6 @@ namespace spp {
 
     void
     mp3ToSample(const std::string& file, float buffer[1][SAMPLE_SIZE]) {
-
         OpenMP3::Library openmp3;
         OpenMP3::Decoder dec(openmp3);
 
@@ -146,8 +148,10 @@ namespace spp {
             if (it.GetNext(frame)) {
                 float stereo[2][FRAME_LENGTH];
                 dec.ProcessFrame(frame, stereo);
-                stereoToMono(stereo, b);
-                medianFilter(b, 3);
+                if (frame.GetMode() == OpenMP3::kModeMono)
+                    compressMono(stereo, b);
+                else
+                    stereoToMono(stereo, b);
                 q++;
             } else {
                 framesLeft = false;
@@ -157,7 +161,7 @@ namespace spp {
 
         // consume remaining frames
         if (framesLeft) {
-            while(it.GetNext(frame));
+            while (it.GetNext(frame));
         }
 
         for (int i = 0; i < SAMPLE_SIZE; ++i) {

@@ -14,31 +14,29 @@ void errorUsage(char** argv) {
 
 std::unique_ptr<spp::envs::ExecEnvironment> parse(int argc, char** argv) {
     using namespace spp::envs;
-    if (argc > 1) {
-        switch (std::atoi(argv[1])) {
+    if (argc > 0) {
+        switch (std::atoi(argv[0])) {
             case spp::K_FOLD_CROSS_VALIDATION:
-                if (argc >= 5) {
-                    auto data = spp::trainingData(argv[4], std::atoi(argv[2]));
-                    KFoldCrossValidationEnv env(data, std::atoi(argv[3]), 1e-4, 0);
+                if (argc >= 4) {
+                    auto data = spp::trainingData(argv[3], std::atoi(argv[1]));
+                    KFoldCrossValidationEnv env(data, std::atoi(argv[2]), 1e-4, 0);
                     return std::make_unique<KFoldCrossValidationEnv>(env);
                 } else {
                     errorUsage(argv);
                 }
             case spp::TEST_DIRECTORY:
-                if (argc >= 3) {
-                    std::cout << "Testing files in \"" << argv[2] << "\"\n";
-                    DIR* dirp = opendir(argv[2]);
+                if (argc >= 2) {
+                    std::cout << "Testing files in \"" << argv[1] << "\"\n";
+                    DIR* dirp = opendir(argv[1]);
                     std::vector<spp::Data> v;
                     struct dirent* dp;
-                    std::ofstream stream("../filesread.txt");
                     while ((dp = readdir(dirp)) != nullptr) {
                         char* ss = nullptr;
                         ss = std::strstr(dp->d_name, ".mp3");
                         if (!ss) continue;
                         spp::Data d;
                         std::string str(dp->d_name);
-                        stream << dp->d_name << std::endl;
-                        d.data = argv[2] + str;
+                        d.data = argv[1] + str;
                         std::string lang(str.begin(), str.begin() + 2);
                         d.language =
                                 (lang == "nl") ? spp::Language::NL :
@@ -49,7 +47,6 @@ std::unique_ptr<spp::envs::ExecEnvironment> parse(int argc, char** argv) {
                                 spp::Language::IT;
                         v.emplace_back(d);
                     }
-                    stream.close();
                     closedir(dirp);
 
                     TestEnvironment env(v);
@@ -58,9 +55,9 @@ std::unique_ptr<spp::envs::ExecEnvironment> parse(int argc, char** argv) {
                     errorUsage(argv);
                 }
             case spp::TEST_FILE:
-                if (argc >= 3) {
-                    std::cout << "Testing \"" << argv[2] << "\"\n";
-                    ClassifyEnvironment env(argv[2]);
+                if (argc >= 2) {
+                    std::cout << "Testing \"" << argv[1] << "\"\n";
+                    ClassifyEnvironment env(argv[1]);
                     return std::make_unique<ClassifyEnvironment>(env);
                 } else {
                     errorUsage(argv);

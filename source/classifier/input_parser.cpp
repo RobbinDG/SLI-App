@@ -19,7 +19,7 @@ std::unique_ptr<spp::envs::ExecEnvironment> parse(int argc, char** argv) {
             case spp::K_FOLD_CROSS_VALIDATION:
                 if (argc >= 4) {
                     auto data = spp::trainingData(argv[3], std::atoi(argv[1]));
-                    KFoldCrossValidationEnv env(data, std::atoi(argv[2]), 1e-4, 0);
+                    KFoldCrossValidationEnv env(data, std::atoi(argv[2]), 1e-4, 1);
                     return std::make_unique<KFoldCrossValidationEnv>(env);
                 } else {
                     errorUsage(argv);

@@ -5,8 +5,8 @@
 
 #define SCALE 1
 
-struct RCNNImpl : torch::nn::Module {
-    RCNNImpl();
+struct CNNImpl : torch::nn::Module {
+    CNNImpl();
 
     torch::Tensor forward(const torch::Tensor& input);
 
@@ -15,6 +15,6 @@ struct RCNNImpl : torch::nn::Module {
     torch::nn::Functional outputFunction;
 };
 
-TORCH_MODULE(RCNN);
+TORCH_MODULE(CNN);
 
 

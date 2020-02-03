@@ -15,7 +15,7 @@ namespace spp {
                 TrainEnvironment(files, learningRate, startEpoch, epochLimit),
                 _K(K) {}
 
-        void KFoldCrossValidationEnv::runEpoch(RCNN net, int epoch) {
+        void KFoldCrossValidationEnv::runEpoch(CNN net, int epoch) {
             size_t N = _files.size() / 6;
             std::vector<std::vector<Data>> v(_K);
 
@@ -53,7 +53,7 @@ namespace spp {
         }
 
         TestResult*
-        KFoldCrossValidationEnv::train_once(RCNN& net, const std::vector<std::vector<Data>>& files, int test_idx) {
+        KFoldCrossValidationEnv::train_once(CNN& net, const std::vector<std::vector<Data>>& files, int test_idx) {
             std::vector<Data> v;
             for (size_t i = 0; i < files.size(); ++i) {
                 if (i != test_idx) v.insert(v.end(), files[i].begin(), files[i].end());
@@ -64,7 +64,7 @@ namespace spp {
             return tenv.run(net);
         }
 
-        void KFoldCrossValidationEnv::train(RCNN& net, const std::vector<Data>& files) {
+        void KFoldCrossValidationEnv::train(CNN& net, const std::vector<Data>& files) {
             torch::optim::Adam optimizer(net->parameters(), torch::optim::AdamOptions(_learning_rate));
 
             float buffer[1][SAMPLE_SIZE];

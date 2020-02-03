@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include "RCNN.hpp"
+#include "CNN.hpp"
 #include "libraries/openmp3/openmp3.h"
 
 namespace spp {

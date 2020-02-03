@@ -6,7 +6,7 @@ namespace spp {
         TestEnvironment::TestEnvironment(std::vector<Data>& files) : _files(files) {
         }
 
-        TestResult* TestEnvironment::run(RCNN net) {
+        TestResult* TestEnvironment::run(CNN net) {
             net->eval();
 
             auto* result = new TestResult();

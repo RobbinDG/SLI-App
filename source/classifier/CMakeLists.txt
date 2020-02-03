@@ -1,10 +1,12 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.12)
 project(spp)
 
+SET(CMAKE_SYSTEM_NAME Linux)
+
+set(CMAKE_CXX_STANDARD 14)
 
 set(OPENMP3_ROOT "libraries/openmp3")
 
-set(CMAKE_CXX_STANDARD 14)
 
 # openmp3
 file(GLOB OPENMP3_SRC
@@ -23,7 +25,7 @@ add_executable(
         ${OPENMP3_ROOT}/include/openmp3.h
         ${OPENMP3_ROOT}/openmp3.cpp
         ${OPENMP3_ROOT}/openmp3.h
-        RCNN.cpp RCNN.hpp data.hpp data.cpp test.cpp test.hpp input_parser.cpp input_parser.hpp results/TestResult.cpp results/TestResult.hpp environments/TrainEnvironment.cpp environments/TrainEnvironment.hpp environments/ExecEnvironment.cpp environments/ExecEnvironment.hpp environments/KFoldCrossValidationEnv.cpp environments/KFoldCrossValidationEnv.hpp environments/TestEnvironment.cpp environments/TestEnvironment.hpp environments/ClassifyEnvironment.cpp environments/ClassifyEnvironment.hpp results/VoidResult.cpp results/VoidResult.hpp results/ClassifyResult.cpp results/ClassifyResult.hpp)
+        CNN.cpp CNN.hpp data.hpp data.cpp test.cpp test.hpp input_parser.cpp input_parser.hpp results/TestResult.cpp results/TestResult.hpp environments/TrainEnvironment.cpp environments/TrainEnvironment.hpp environments/ExecEnvironment.cpp environments/ExecEnvironment.hpp environments/KFoldCrossValidationEnv.cpp environments/KFoldCrossValidationEnv.hpp environments/TestEnvironment.cpp environments/TestEnvironment.hpp environments/ClassifyEnvironment.cpp environments/ClassifyEnvironment.hpp results/VoidResult.cpp results/VoidResult.hpp results/ClassifyResult.cpp results/ClassifyResult.hpp)
 
 target_link_libraries(spp "${TORCH_LIBRARIES}")
 set_property(TARGET spp PROPERTY CXX_STANDARD 14)

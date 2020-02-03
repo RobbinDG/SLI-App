@@ -11,7 +11,8 @@ namespace spp {
                   _start_epoch(start_epoch),
                   _epoch_limit(epoch_limit) {}
 
-        VoidResult* TrainEnvironment::run(RCNN net) {
+        VoidResult* TrainEnvironment::run(CNN net) {
+            std::cout << _start_epoch << std::endl;
             for (int e = _start_epoch; e < _epoch_limit; ++e)
                 runEpoch(net, e);
 

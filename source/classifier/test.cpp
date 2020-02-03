@@ -1,9 +1,9 @@
-#include "RCNN.hpp"
+#include "CNN.hpp"
 #include "test.hpp"
 
 namespace spp {
 
-    void dumpParameters(RCNN& net, TestResult& results, int epoch, int batch) {
+    void dumpParameters(CNN& net, TestResult& results, int epoch, int batch) {
         std::stringstream ss;
         ss << "../params/params_" << epoch << "-" << batch;
         torch::save(net, ss.str());

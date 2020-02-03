@@ -1,16 +1,28 @@
 #pragma once
 
-#include "../RCNN.hpp"
+#include "../CNN.hpp"
 #include "../results/VoidResult.hpp"
 
-namespace spp { namespace envs {
+namespace spp {
+    namespace envs {
 
-    class ExecEnvironment {
-    public:
-        virtual VoidResult* run(RCNN net) = 0;
+        /**
+         * An abstract environment to be overridden for ML
+         * related tasks.
+         */
+        class ExecEnvironment {
+        public:
+            /**
+             * Runs the environment on a given network
+             * @param net
+             * @return An abstract results object that contains the result
+             * of the operation
+             */
+            virtual VoidResult* run(CNN net) = 0;
 
-    };
+        };
 
-} }
+    }
+}
 
 

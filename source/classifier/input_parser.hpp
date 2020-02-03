@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RCNN.hpp"
+#include "CNN.hpp"
 #include "environments/ExecEnvironment.hpp"
 #include <memory>
 

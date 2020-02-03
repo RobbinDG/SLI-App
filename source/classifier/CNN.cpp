@@ -1,6 +1,6 @@
-#include "RCNN.hpp"
+#include "CNN.hpp"
 
-RCNNImpl::RCNNImpl() :
+CNNImpl::CNNImpl() :
         features(register_module("features", torch::nn::Sequential(
                 // Input: 1 x 22118
                 torch::nn::Conv1d(
@@ -49,7 +49,7 @@ RCNNImpl::RCNNImpl() :
         ))),
         outputFunction(register_module("outputFunction", torch::nn::Functional(torch::relu))) {}
 
-torch::Tensor RCNNImpl::forward(const torch::Tensor& input) {
+torch::Tensor CNNImpl::forward(const torch::Tensor& input) {
     auto t = features->forward(input);
     t = t.transpose(2, 1);
     t = dense->forward(t);

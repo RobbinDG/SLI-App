@@ -6,7 +6,9 @@
 
 namespace spp {
     namespace envs {
-
+        /**
+         * An environment for classifying languages
+         */
         class ClassifyEnvironment : public ExecEnvironment {
         private:
             std::string _file;
@@ -14,7 +16,7 @@ namespace spp {
         public:
             explicit ClassifyEnvironment(std::string file);
 
-            ClassifyResult* run(RCNN net) override;
+            ClassifyResult* run(CNN net) override;
         };
 
     }

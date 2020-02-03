@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="spp"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\..\lib\;CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\;CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\;CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\;CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Torch\;CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\;CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\public\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/robbin/Documents/university/year3/1b/spp/source/classifier"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/robbin/Documents/university/year3/1b/spp/source/classifier"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/robbin/Documents/university/year3/1b/spp/source/classifier"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="spp">
+				<Option output="/home/robbin/Documents/university/year3/1b/spp/source/classifier/spp" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/robbin/Documents/university/year3/1b/spp/source/classifier"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_THP_CORE"/>
+					<Add option="-DAT_PARALLEL_OPENMP=1"/>
+					<Add directory="/lib/libtorch/include"/>
+					<Add directory="/lib/libtorch/include/torch/csrc/api/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 spp"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="spp/fast">
+				<Option output="/home/robbin/Documents/university/year3/1b/spp/source/classifier/spp" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/robbin/Documents/university/year3/1b/spp/source/classifier"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_THP_CORE"/>
+					<Add option="-DAT_PARALLEL_OPENMP=1"/>
+					<Add directory="/lib/libtorch/include"/>
+					<Add directory="/lib/libtorch/include/torch/csrc/api/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 spp/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/robbin/Documents/university/year3/1b/spp/source/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/RCNN.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/RCNN.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/data.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/data.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/ClassifyEnvironment.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/ClassifyEnvironment.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/ExecEnvironment.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/ExecEnvironment.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/KFoldCrossValidationEnv.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/KFoldCrossValidationEnv.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/TestEnvironment.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/TestEnvironment.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/TrainEnvironment.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/TrainEnvironment.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/input_parser.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/input_parser.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/libraries/openmp3/include/openmp3.h">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/libraries/openmp3/openmp3.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/libraries/openmp3/openmp3.h">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/main.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/ClassifyResult.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/ClassifyResult.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/TestResult.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/TestResult.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/VoidResult.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/VoidResult.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/test.cpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/test.hpp">
+			<Option target="spp"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Torch/TorchConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Torch\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Torch/TorchConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Torch\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Caffe2/Caffe2Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Caffe2/Caffe2ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Caffe2/Caffe2Targets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Caffe2/Caffe2Targets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Caffe2/public/mkl.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\public\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Caffe2/public/mkldnn.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\public\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Caffe2/public/threads.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\public\"/>
+		</Unit>
+		<Unit filename="/home/robbin/Documents/university/year3/1b/spp/source/classifier/../../../../../../../../../lib/libtorch/share/cmake/Caffe2/public/utils.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\..\lib\libtorch\share\cmake\Caffe2\public\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

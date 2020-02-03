@@ -5,6 +5,6 @@
 
 namespace spp {
 
-    void dumpParameters(RCNN& net, TestResult& results, int epoch, int batch);
+    void dumpParameters(CNN& net, TestResult& results, int epoch, int batch);
 
 }

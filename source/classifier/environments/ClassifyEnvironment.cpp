@@ -7,7 +7,7 @@ namespace spp {
         ClassifyEnvironment::ClassifyEnvironment(std::string file) : _file(std::move(file)) {
         }
 
-        ClassifyResult* ClassifyEnvironment::run(RCNN net) {
+        ClassifyResult* ClassifyEnvironment::run(CNN net) {
             net->eval();
 
             float buffer[1][SAMPLE_SIZE];

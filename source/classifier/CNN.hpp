@@ -5,6 +5,9 @@
 
 #define SCALE 1
 
+/**
+ * A CNN implementation for spoken language classification
+ */
 struct CNNImpl : torch::nn::Module {
     CNNImpl();
 

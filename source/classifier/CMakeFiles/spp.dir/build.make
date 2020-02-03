@@ -83,18 +83,18 @@ CMakeFiles/spp.dir/libraries/openmp3/openmp3.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spp.dir/libraries/openmp3/openmp3.cpp.s"
 	/usr/bin/x86_64-pc-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/robbin/Documents/university/year3/1b/spp/source/classifier/libraries/openmp3/openmp3.cpp -o CMakeFiles/spp.dir/libraries/openmp3/openmp3.cpp.s
 
-CMakeFiles/spp.dir/RCNN.cpp.o: CMakeFiles/spp.dir/flags.make
-CMakeFiles/spp.dir/RCNN.cpp.o: RCNN.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/robbin/Documents/university/year3/1b/spp/source/classifier/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/spp.dir/RCNN.cpp.o"
-	/usr/bin/x86_64-pc-linux-gnu-g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spp.dir/RCNN.cpp.o -c /home/robbin/Documents/university/year3/1b/spp/source/classifier/RCNN.cpp
+CMakeFiles/spp.dir/CNN.cpp.o: CMakeFiles/spp.dir/flags.make
+CMakeFiles/spp.dir/CNN.cpp.o: CNN.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/robbin/Documents/university/year3/1b/spp/source/classifier/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/spp.dir/CNN.cpp.o"
+	/usr/bin/x86_64-pc-linux-gnu-g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spp.dir/CNN.cpp.o -c /home/robbin/Documents/university/year3/1b/spp/source/classifier/CNN.cpp
 
-CMakeFiles/spp.dir/RCNN.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spp.dir/RCNN.cpp.i"
-	/usr/bin/x86_64-pc-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/robbin/Documents/university/year3/1b/spp/source/classifier/RCNN.cpp > CMakeFiles/spp.dir/RCNN.cpp.i
+CMakeFiles/spp.dir/CNN.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spp.dir/CNN.cpp.i"
+	/usr/bin/x86_64-pc-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/robbin/Documents/university/year3/1b/spp/source/classifier/CNN.cpp > CMakeFiles/spp.dir/CNN.cpp.i
 
-CMakeFiles/spp.dir/RCNN.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spp.dir/RCNN.cpp.s"
-	/usr/bin/x86_64-pc-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/robbin/Documents/university/year3/1b/spp/source/classifier/RCNN.cpp -o CMakeFiles/spp.dir/RCNN.cpp.s
+CMakeFiles/spp.dir/CNN.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spp.dir/CNN.cpp.s"
+	/usr/bin/x86_64-pc-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/robbin/Documents/university/year3/1b/spp/source/classifier/CNN.cpp -o CMakeFiles/spp.dir/CNN.cpp.s
 
 CMakeFiles/spp.dir/data.cpp.o: CMakeFiles/spp.dir/flags.make
 CMakeFiles/spp.dir/data.cpp.o: data.cpp
@@ -243,7 +243,7 @@ CMakeFiles/spp.dir/results/ClassifyResult.cpp.s: cmake_force
 spp_OBJECTS = \
 "CMakeFiles/spp.dir/main.cpp.o" \
 "CMakeFiles/spp.dir/libraries/openmp3/openmp3.cpp.o" \
-"CMakeFiles/spp.dir/RCNN.cpp.o" \
+"CMakeFiles/spp.dir/CNN.cpp.o" \
 "CMakeFiles/spp.dir/data.cpp.o" \
 "CMakeFiles/spp.dir/test.cpp.o" \
 "CMakeFiles/spp.dir/input_parser.cpp.o" \
@@ -261,7 +261,7 @@ spp_EXTERNAL_OBJECTS =
 
 spp: CMakeFiles/spp.dir/main.cpp.o
 spp: CMakeFiles/spp.dir/libraries/openmp3/openmp3.cpp.o
-spp: CMakeFiles/spp.dir/RCNN.cpp.o
+spp: CMakeFiles/spp.dir/CNN.cpp.o
 spp: CMakeFiles/spp.dir/data.cpp.o
 spp: CMakeFiles/spp.dir/test.cpp.o
 spp: CMakeFiles/spp.dir/input_parser.cpp.o

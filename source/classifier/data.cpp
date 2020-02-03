@@ -3,7 +3,6 @@
 #include "data.hpp"
 
 namespace spp {
-    const int EPOCH_START = 3, EPOCH_LIMIT = 10;
     const std::string TRAIN_STATS_FILE = "../params/train_stats.csv";
 
     long _NL[6] = {0};//{1, 0, 0, 0, 0, 0};
@@ -73,17 +72,6 @@ namespace spp {
         }
     }
 
-    void medianFilter(float arr[2][FRAME_LENGTH], int filter_size) {
-        for (int i = 1; i < FRAME_LENGTH - 1; ++i) {
-            for (int ch = 0; ch < 2; ++ch) {
-                float a = arr[ch][i - 1], b = arr[ch][i], c = arr[ch][i + 1];
-                arr[ch][i] = (a <= b && b <= c) || (c <= b && b <= a) ? b :
-                             (b <= a && a <= c) || (c <= a && a <= c) ? a :
-                             c;
-            }
-        }
-    }
-
     void compressMono(float arr[2][FRAME_LENGTH], float arr2[1][FRAME_LENGTH]) {
         for (int i = 0; i < FRAME_LENGTH; ++i) arr2[0][i] = arr[0][i];
     }
@@ -101,32 +89,6 @@ namespace spp {
         fl.read(ret, len);
         fl.close();
         return {ret, len};
-    }
-
-    bool getTrainData(OpenMP3::Iterator& it, OpenMP3::Decoder& decoder,
-                      float buffer[1][SAMPLE_SIZE]) {
-        OpenMP3::Frame frame;
-        float t_buffer[COMPRESSION * (SAMPLE_SIZE / FRAME_LENGTH)][1][FRAME_LENGTH];
-
-        bool hasFrames = true;
-        for (auto& b : t_buffer) {
-            if (it.GetNext(frame)) {
-                float stereo[2][FRAME_LENGTH];
-                decoder.ProcessFrame(frame, stereo);
-                stereoToMono(stereo, b);
-            } else {
-                for (int i = 0; i < FRAME_LENGTH; ++i) {
-                    for (auto& x : b) x[i] = 0;
-                }
-                hasFrames = false;
-            }
-        }
-        for (int i = 0; i < SAMPLE_SIZE; ++i) {
-            int s = i * COMPRESSION;
-            buffer[0][i] = t_buffer[s / FRAME_LENGTH][0][s % FRAME_LENGTH];
-        }
-        normalise(buffer);
-        return hasFrames;
     }
 
     void

@@ -6,23 +6,45 @@
 
 #IncludeRegexTransform: 
 
-/home/robbin/Documents/university/year3/1b/spp/source/classifier/RCNN.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/CNN.hpp
 torch/torch.h
 -
 
 /home/robbin/Documents/university/year3/1b/spp/source/classifier/data.hpp
 map
 -
-RCNN.hpp
-/home/robbin/Documents/university/year3/1b/spp/source/classifier/RCNN.hpp
+CNN.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/CNN.hpp
 libraries/openmp3/openmp3.h
 /home/robbin/Documents/university/year3/1b/spp/source/classifier/libraries/openmp3/openmp3.h
 
 /home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/ExecEnvironment.hpp
-../RCNN.hpp
-/home/robbin/Documents/university/year3/1b/spp/source/classifier/RCNN.hpp
+../CNN.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/CNN.hpp
 ../results/VoidResult.hpp
 /home/robbin/Documents/university/year3/1b/spp/source/classifier/results/VoidResult.hpp
+
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/KFoldCrossValidationEnv.cpp
+random
+-
+KFoldCrossValidationEnv.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/KFoldCrossValidationEnv.hpp
+../test.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/test.hpp
+TestEnvironment.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/TestEnvironment.hpp
+
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/KFoldCrossValidationEnv.hpp
+TrainEnvironment.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/TrainEnvironment.hpp
+../results/TestResult.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/TestResult.hpp
+
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/TestEnvironment.hpp
+ExecEnvironment.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/ExecEnvironment.hpp
+../results/TestResult.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/TestResult.hpp
 
 /home/robbin/Documents/university/year3/1b/spp/source/classifier/environments/TrainEnvironment.cpp
 TrainEnvironment.hpp
@@ -44,7 +66,25 @@ ExecEnvironment.hpp
 include/openmp3.h
 /home/robbin/Documents/university/year3/1b/spp/source/classifier/libraries/openmp3/include/openmp3.h
 
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/TestResult.hpp
+vector
+-
+string
+-
+torch/torch.h
+-
+../data.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/data.hpp
+VoidResult.hpp
 /home/robbin/Documents/university/year3/1b/spp/source/classifier/results/VoidResult.hpp
+
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/VoidResult.hpp
+
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/test.hpp
+data.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/data.hpp
+results/TestResult.hpp
+/home/robbin/Documents/university/year3/1b/spp/source/classifier/results/TestResult.hpp
 
 /lib/libtorch/include/ATen/ATen.h
 c10/core/Allocator.h

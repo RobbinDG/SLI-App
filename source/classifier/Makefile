@@ -123,32 +123,32 @@ spp/fast:
 	$(MAKE) -f CMakeFiles/spp.dir/build.make CMakeFiles/spp.dir/build
 .PHONY : spp/fast
 
-RCNN.o: RCNN.cpp.o
+CNN.o: CNN.cpp.o
 
-.PHONY : RCNN.o
+.PHONY : CNN.o
 
 # target to build an object file
-RCNN.cpp.o:
-	$(MAKE) -f CMakeFiles/spp.dir/build.make CMakeFiles/spp.dir/RCNN.cpp.o
-.PHONY : RCNN.cpp.o
+CNN.cpp.o:
+	$(MAKE) -f CMakeFiles/spp.dir/build.make CMakeFiles/spp.dir/CNN.cpp.o
+.PHONY : CNN.cpp.o
 
-RCNN.i: RCNN.cpp.i
+CNN.i: CNN.cpp.i
 
-.PHONY : RCNN.i
+.PHONY : CNN.i
 
 # target to preprocess a source file
-RCNN.cpp.i:
-	$(MAKE) -f CMakeFiles/spp.dir/build.make CMakeFiles/spp.dir/RCNN.cpp.i
-.PHONY : RCNN.cpp.i
+CNN.cpp.i:
+	$(MAKE) -f CMakeFiles/spp.dir/build.make CMakeFiles/spp.dir/CNN.cpp.i
+.PHONY : CNN.cpp.i
 
-RCNN.s: RCNN.cpp.s
+CNN.s: CNN.cpp.s
 
-.PHONY : RCNN.s
+.PHONY : CNN.s
 
 # target to generate assembly for a file
-RCNN.cpp.s:
-	$(MAKE) -f CMakeFiles/spp.dir/build.make CMakeFiles/spp.dir/RCNN.cpp.s
-.PHONY : RCNN.cpp.s
+CNN.cpp.s:
+	$(MAKE) -f CMakeFiles/spp.dir/build.make CMakeFiles/spp.dir/CNN.cpp.s
+.PHONY : CNN.cpp.s
 
 data.o: data.cpp.o
 
@@ -510,9 +510,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... spp"
-	@echo "... RCNN.o"
-	@echo "... RCNN.i"
-	@echo "... RCNN.s"
+	@echo "... CNN.o"
+	@echo "... CNN.i"
+	@echo "... CNN.s"
 	@echo "... data.o"
 	@echo "... data.i"
 	@echo "... data.s"

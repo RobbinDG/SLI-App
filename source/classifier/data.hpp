@@ -5,7 +5,6 @@
 #include "libraries/openmp3/openmp3.h"
 
 namespace spp {
-    extern const int EPOCH_START, EPOCH_LIMIT;
     constexpr int FRAME_LENGTH = 1152, COMPRESSION = 5, FRAMES_PER_SAMPLE = 96,
             SAMPLE_SIZE = FRAMES_PER_SAMPLE * FRAME_LENGTH / COMPRESSION;
     extern const std::string TRAIN_STATS_FILE;
@@ -42,21 +41,37 @@ namespace spp {
         size_t length;
     } SampleList;
 
+    /**
+     * Gathers Data objects from a given file directory.
+     * Assumes equal amounts of files for each language
+     * @param dir
+     * @param N
+     */
     std::vector<Data> trainingData(const std::string& dir, int N);
 
-    std::vector<int> distinctRandomList(int start, int end, int m);
-
+    /**
+     * Normalises a frame.
+     */
     void normalise(float buffer[2][SAMPLE_SIZE]);
 
-    void medianFilter(float arr[2][SAMPLE_SIZE], int filter_size);
+    /**
+     * Converts a dual channel mono frame to single channel
+     */
+    void compressMono(float arr[2][FRAME_LENGTH], float arr2[1][FRAME_LENGTH]);
 
-    float** stereoToMono(float arr[2][SAMPLE_SIZE]);
+    /**
+     * Converts stereo frames to signle channel mono.
+     */
+    void stereoToMono(float arr[2][FRAME_LENGTH], float arr2[1][FRAME_LENGTH]);
 
+    /**
+     * Reads a file and returns the samples.
+     */
     SampleList readFile(const std::string& file);
 
-    bool getTrainData(OpenMP3::Iterator& it, OpenMP3::Decoder& decoder,
-                      float buffer[2][SAMPLE_SIZE]);
-
-    void
-    mp3ToSample(const std::string& file, float buffer[2][SAMPLE_SIZE]);
+    /**
+     * Converts an mp3 to samples and stores it into a buffer. Does necessary pre-processing
+     * like normalisation and removing dead frames
+     */
+    void mp3ToSample(const std::string& file, float buffer[2][SAMPLE_SIZE]);
 }

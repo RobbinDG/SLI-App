@@ -12,6 +12,10 @@ void errorUsage(char** argv) {
     exit(EXIT_FAILURE);
 }
 
+/**
+ * Parses the input arguments
+ * @return a smart pointer to a set up execution environment, nullptr in case of failure.
+ */
 std::unique_ptr<spp::envs::ExecEnvironment> parse(int argc, char** argv) {
     using namespace spp::envs;
     if (argc > 0) {

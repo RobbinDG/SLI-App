@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/spp.dir/RCNN.cpp.o"
+  "CMakeFiles/spp.dir/CNN.cpp.o"
   "CMakeFiles/spp.dir/data.cpp.o"
   "CMakeFiles/spp.dir/environments/ClassifyEnvironment.cpp.o"
   "CMakeFiles/spp.dir/environments/ExecEnvironment.cpp.o"

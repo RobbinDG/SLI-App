@@ -8,7 +8,7 @@
 #include "environments/ClassifyEnvironment.hpp"
 
 void errorUsage(char** argv) {
-    std::cerr << "Usage: " << argv[0] << " <method> <parameters...>";
+    std::cerr << "Usage: " << argv[0] << " <method> <parameters...>\n";
     exit(EXIT_FAILURE);
 }
 
@@ -23,7 +23,7 @@ std::unique_ptr<spp::envs::ExecEnvironment> parse(int argc, char** argv) {
             case spp::K_FOLD_CROSS_VALIDATION:
                 if (argc >= 4) {
                     auto data = spp::trainingData(argv[3], std::atoi(argv[1]));
-                    KFoldCrossValidationEnv env(data, std::atoi(argv[2]), 3e-5, 4);
+                    KFoldCrossValidationEnv env(data, std::atoi(argv[2]), 3e-5, 6);
                     return std::make_unique<KFoldCrossValidationEnv>(env);
                 } else {
                     errorUsage(argv);

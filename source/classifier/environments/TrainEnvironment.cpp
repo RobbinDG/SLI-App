@@ -12,6 +12,7 @@ namespace spp {
                   _epoch_limit(epoch_limit) {}
 
         VoidResult* TrainEnvironment::run(CNN net) {
+            net->train();
             for (int e = _start_epoch; e < _epoch_limit; ++e) {
                 runEpoch(net, e);
             }

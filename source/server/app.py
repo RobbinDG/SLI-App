@@ -23,17 +23,16 @@ def transfer_blob_req():
             samples[i] = int((samples[i - 2] + 2 * samples[i - 1] + 4 * samples[i] + 2 * samples[
                 i + 1] + samples[i + 2]) / 10)
         new_audio = audio._spawn(data=samples)
-        new_audio.export('audio.mp3', format='mp3')
+        new_audio.export('tmp.mp3', format='mp3')
 
         args = (
-            '../classifier/cmake-build-debug/spp', '../classifier/params/params_0-9', '2',
-            'audio.mp3')
+            '../classifier/spp', '../classifier/params/ser.pt', '2',
+            'tmp.mp3')
         popen = subprocess.Popen(args, stdout=subprocess.PIPE)
         popen.wait()
         output = str(popen.stdout.read())
         output = output.split('\\n')
-        print(output[2])
-        return jsonify(language=int(output[2]))
+        return jsonify(language=list(float(x) for x in output[2].split(' ')[0:-1]))
     return jsonify(language=-1)
 
 

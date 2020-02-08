@@ -3,7 +3,7 @@
 #include "data.hpp"
 
 namespace spp {
-    const std::string TRAIN_STATS_FILE = "../params/train_stats.csv";
+    const std::string TRAIN_STATS_FILE = "params/train_stats.csv";
 
     long _NL[6] = {0};//{1, 0, 0, 0, 0, 0};
     long _EN[6] = {1};//{0, 1, 0, 0, 0, 0};

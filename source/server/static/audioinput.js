@@ -51,7 +51,7 @@ async function startRecording() {
 async function stopRecording() {
     const audio = await recorder.stop();
 
-    document.getElementById("lang").innerText = "Working...";
+    document.getElementById("classifications").innerText = "Working...";
 
     document.getElementById("player").src = audio.audio.src;
     console.log(audio.audioUrl);
@@ -61,7 +61,21 @@ async function stopRecording() {
     let formdata = new FormData();
     formdata.append("oggfile", file);
     request("/transfer_ogg", formdata, (data) => {
-        document.getElementById("lang").innerText = idxToLanguage(data.language);
+         document.getElementById("classifications").innerHTML = "";
+        for (let i = 0; i < 6; ++i) {
+            let node = document.createElement("div");
+            node.className += "col text-center";
+
+            let lang = document.createElement("p");
+            lang.innerText = idxToLanguage(i);
+            node.appendChild(lang);
+
+            let prob = document.createElement("p");
+            prob.innerText = (data.language[i] * 100).toFixed(2).toString() + "%";
+            node.appendChild(prob);
+
+            document.getElementById("classifications").appendChild(node);
+        }
     }, () => {});
 }
 
@@ -72,7 +86,6 @@ function blobToFile(theBlob, fileName) {
 }
 
 function idxToLanguage(index) {
-    console.log("here");
     switch (index) {
         case 0: return "Dutch / Nederlands";
         case 1: return "English";

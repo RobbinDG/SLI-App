@@ -36,6 +36,8 @@ trainingdata/
 tensorflow/
 tf-cmake/
 sourcecp/
+tmp.mp3
+tmp.ogg
 
 # IDEA
 .idea/

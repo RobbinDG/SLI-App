@@ -5,7 +5,7 @@ namespace spp {
 
     void dumpParameters(CNN& net, TestResult& results, int epoch, int batch) {
         std::stringstream ss;
-        ss << "../params/params_" << epoch << "-" << batch;
+        ss << "params/params_" << epoch << "-" << batch;
         torch::save(net, ss.str());
 
         results.print();

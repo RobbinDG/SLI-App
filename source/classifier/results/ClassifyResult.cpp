@@ -2,10 +2,11 @@
 
 namespace spp {
     void ClassifyResult::print() {
-        std::cout << _language << std::endl;
+        for(auto& v : _probabilities) std::cout << v << " ";
+        std::cout << std::endl;
     }
 
-    ClassifyResult::ClassifyResult(Language language) : _language(language) {
+    ClassifyResult::ClassifyResult(std::vector<float>& output) : _probabilities(output) {
     }
 }
 

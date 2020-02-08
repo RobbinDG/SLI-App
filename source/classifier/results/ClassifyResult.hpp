@@ -9,10 +9,10 @@ namespace spp {
      */
     class ClassifyResult : public VoidResult {
     private:
-        Language _language;
+        std::vector<float> _probabilities;
 
     public:
-        explicit ClassifyResult(Language language);
+        explicit ClassifyResult(std::vector<float>& output);
 
         void print() override;
 

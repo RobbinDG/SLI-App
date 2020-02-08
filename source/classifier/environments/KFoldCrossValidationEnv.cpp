@@ -46,6 +46,7 @@ namespace spp {
             // Train while leaving each partition out, once
             for (k = 0; k < _K; ++k) {
                 std::cout << "Training, excluding batch " << (k + 1) << "/" << _K << std::endl;
+                std::cout << epoch << std::endl;
                 auto test_results = train_once(net, v, k);
                 dumpParameters(net, *test_results, epoch, k);
                 delete test_results;

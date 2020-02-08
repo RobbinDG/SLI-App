@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
         std::ifstream fs(argv[1]);
         if (fs.good()) {
             torch::load(cnn, argv[1]);
+            cnn->eval();
             std::cout << "Successfully loaded model from file" << std::endl;
         }
     }

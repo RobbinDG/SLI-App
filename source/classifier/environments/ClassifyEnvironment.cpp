@@ -17,17 +17,14 @@ namespace spp {
             auto input = torch::from_blob(buffer, {1, SAMPLE_SIZE}).unsqueeze(0);
 
             torch::NoGradGuard no_grad_guard;
-            output = net->forward(input);
+            output = torch::exp(net->forward(input));
 
-            int max_i = -1;
-            float m = -1000.0;
-            for (int i = 0; i < 6; ++i) {
-                if (output.data_ptr<float>()[i] > m) {
-                    m = output.data_ptr<float>()[i];
-                    max_i = i;
-                }
-            }
-            return new ClassifyResult(static_cast<Language>(max_i));
+            std::vector<float> outVector;
+            outVector.reserve(6);
+
+            for (int i = 0; i < 6; ++i) outVector.push_back(output.data_ptr<float>()[i]);
+
+            return new ClassifyResult(outVector);
         }
     }
 }

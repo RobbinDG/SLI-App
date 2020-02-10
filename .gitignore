@@ -38,7 +38,10 @@ tf-cmake/
 sourcecp/
 tmp.mp3
 tmp.ogg
+paramsbackup/
 
 # IDEA
 .idea/
 cmake-build-debug/
+CMakeFiles/
+CMakeCache.txt
